@@ -1,0 +1,18 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "ts-node file debug",
+			"type": "pwa-node",
+			"request": "launch",
+			"runtimeExecutable": "ts-node",
+			//"runtimeArgs": ["--nolazy", "-r", "ts-node"],
+
+			"args": ["${file}", "--transpile-only"],
+
+			"cwd": "${workspaceRoot}",
+			"internalConsoleOptions": "openOnSessionStart",
+			"skipFiles": ["<node_internals>/**", "node_modules/**"]
+		}
+	]
+}
