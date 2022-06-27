@@ -5,7 +5,9 @@
 	"tasks": [
 		{
 			"type": "shell",
-			"command": ["npx prettier --write --config ./.prettierrc.json .; npm version patch -f; npx typedoc --options typedoc.json; tsc && git commit -a -m'${input:comment}'; git push; npm publish"],
+			"command": [
+				"npx prettier --write --config ./.prettierrc.json .; npm version patch -f; npx typedoc --options typedoc.json; tsc && git commit -a -m'${input:comment}'; git push; npm publish"
+			],
 			"label": "publish"
 		}
 	],
