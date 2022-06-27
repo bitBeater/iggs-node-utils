@@ -1,15 +1,19 @@
 {
-  "name": "iggs-node-utils",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "genDocs": "npx typedoc --options typedoc.json"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@types/node": "^18.0.0",
-    "iggs-utils": "^1.1.98"
-  }
+	"name": "@alexrr2iggs/iggs-node-utils",
+	"version": "1.0.1",
+	"description": "",
+	"main": "dist/index.js",
+	"scripts": {
+		"genDocs": "npx typedoc --options typedoc.json"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/alexrr2iggs/iggs-node-utils.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@types/node": "^18.0.0",
+		"iggs-utils": "^1.1.98"
+	}
 }
