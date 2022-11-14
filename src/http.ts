@@ -14,7 +14,48 @@ export interface httpResponse<T> {
 	data: T;
 }
 
+export function httpSimpleReq(
+	reqOpts: HttpRequestOptions | string | URL,
+	callback?: (res: IncomingMessage, payload?: any) => void
+): ClientRequest {
+	reqOpts = adaptRequestOpts(reqOpts);
+
+	const reqFn = getRequestFn(reqOpts);
+	const req = reqFn(reqOpts, callback);
+
+	req.flushHeaders();
+	req.end();
+
+	return req;
+}
+
 export function httpRequest(reqOpts: HttpRequestOptions | string | URL, payload?: any): Promise<httpResponse<string>> {
+	const retVAl = new Promise<httpResponse<string>>((resolve, reject) => {
+		const req = httpSimpleReq(reqOpts, response => {
+			let data = '';
+			// a data chunk has been received.
+			response.on('data', chunk => {
+				data += chunk;
+			});
+
+			// complete response has been received.
+			response.on('end', () => {
+				resolve({ response, data });
+			});
+		}).on('error', err => {
+			reject(err);
+		});
+
+		if (payload) req.write(payload);
+
+		req.flushHeaders();
+		req.end();
+	});
+
+	return retVAl;
+}
+
+export function httpRawRequest(reqOpts: HttpRequestOptions | string | URL, payload?: any): Promise<httpResponse<string>> {
 	const retVAl = new Promise<httpResponse<string>>((resolve, reject) => {
 		reqOpts = adaptRequestOpts(reqOpts);
 		const reqFn = getRequestFn(reqOpts);
@@ -74,7 +115,7 @@ function getProtocol(req: RequestOptions | string | URL): 'https' | 'http' {
 	return rq?.protocol?.replace(/\:/gm, '') as 'https' | 'http';
 }
 
-function getRequestFn(
+export function getRequestFn(
 	req: RequestOptions | string | URL
 ): (options: RequestOptions | string | URL, callback?: (res: IncomingMessage) => void) => ClientRequest {
 	const protocol = getProtocol(req);
