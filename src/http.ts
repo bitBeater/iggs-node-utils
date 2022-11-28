@@ -1,6 +1,9 @@
+import { createWriteStream, existsSync, PathLike } from 'fs';
+import { mkdir, stat, writeFile } from 'fs/promises';
 import { ClientRequest, get, IncomingMessage, request, RequestOptions } from 'http';
 import { get as httpsGet, request as httpsRequest } from 'https';
 import { reviver } from 'iggs-utils';
+import { dirname } from 'path';
 import { stringify } from 'querystring';
 import { URL } from 'url';
 
@@ -132,6 +135,37 @@ export function getRequestFn(
 	return request;
 }
 
+/**
+ * Downloads from url and save on fs, optimal for big files because uses streams.
+ * If the file directory does not exist, it will be recursively created.
+ * Once the download is complete, IncomingMessage is returned
+ * @param reqOpts
+ * @param file
+ * @returns
+ */
+export function downloadOnFs(reqOpts: HttpRequestOptions | string | URL, file: PathLike): Promise<IncomingMessage> {
+	const dirPath = dirname(file.toString());
+
+	return new Promise((resolve, reject) => {
+		stat(dirPath)
+			.catch(err => {
+				if (err.code === 'ENOENT') {
+					return mkdir(dirPath, { recursive: true });
+				} else reject(err);
+			})
+			.then(() => {
+				const fsWriteStream = createWriteStream(file);
+				const req = httpSimpleReq(reqOpts, (res: IncomingMessage) => {
+					res
+						.pipe(fsWriteStream)
+						.on('error', e => reject(e))
+						.on('finish', () => resolve(res));
+				});
+
+				req.on('error', e => reject(e));
+			});
+	});
+}
 //--------------------------------------------------------------------------------------------------------------------------------
 
 export function objToCookies(obj: any): string {

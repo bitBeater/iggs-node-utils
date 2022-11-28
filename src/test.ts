@@ -1,24 +1,12 @@
-import { getRequestFn, httpRequest, httpSimpleReq } from './http';
+import { downloadOnFs, getRequestFn, httpRequest, httpSimpleReq } from './http';
 import { get } from 'https';
 import { IncomingMessage } from 'http';
 import { Writable } from 'stream';
 import { bytes } from 'iggs-utils';
 import { appendFileSync, createWriteStream } from 'fs';
-
 const url =
-	"https://player.odycdn.com/api/v4/streams/free/%E2%9D%84%EF%B8%8Fep134-'christmas-holiday-ornament/9d29250fe0481d97d68309b701c2b3789fe78d33/a81b43?download=true";
-
-var totArrived = 0;
-var writable = new Writable({
-	write: function (chunk, encoding, next) {
-		totArrived += chunk.length;
-		console.log('arrived MB', totArrived / bytes.MB, ': memory usage', process.memoryUsage().rss / bytes.MB);
-		appendFileSync('/home/alex/Videos/test.mp4', chunk);
-		next();
-	},
-});
-
-const req = httpSimpleReq(url);
-req.on('response', inMsg => {
-	inMsg.pipe(writable);
-});
+	'https://oaidalleapiprodscus.blob.core.windows.net/private/org-Et1wRZNex1RMMN150hTSGb4g/user-obBmJIS2Q7oUnOS72FCoqHNG/img-G0MAITr5NtTx6k48JU3mlcBY.png?st=2022-11-28T21%3A38%3A34Z&se=2022-11-28T23%3A38%3A34Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2022-11-28T02%3A14%3A15Z&ske=2022-11-29T02%3A14%3A15Z&sks=b&skv=2021-08-06&sig=iIupy5zmMY1j3c8F3WfOTmY3xtH0zk2aGlJbLM2MOcU%3D';
+const url2 = 'https://www.asd-europe.org/sites/default/file/asd-logo_0.p';
+downloadOnFs(url2, '/home/alex/Pictures/sd/asdas/asasasd/img.png')
+	.catch(e => console.error(e))
+	.then(e => console.log(e));
