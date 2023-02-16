@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="x-ua-compatible" content="IE=edge" />
-		<title>insertBetweenPlacweHoldersSync | @alexrr2iggs/iggs-node-utils - v1.0.4</title>
+		<title>downloadOnFs | @alexrr2iggs/iggs-node-utils - v1.0.4</title>
 		<meta name="description" content="Documentation for @alexrr2iggs/iggs-node-utils - v1.0.4" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="../assets/style.css" />
@@ -49,23 +49,24 @@
 				<div class="tsd-page-title">
 					<ul class="tsd-breadcrumb">
 						<li><a href="../modules.html">@alexrr2iggs/iggs-node-utils - v1.0.4</a></li>
-						<li><a href="../modules/files.html">files</a></li>
-						<li><a href="files.insertBetweenPlacweHoldersSync.html">insertBetweenPlacweHoldersSync</a></li>
+						<li><a href="../modules/http.html">http</a></li>
+						<li><a href="http.downloadOnFs.html">downloadOnFs</a></li>
 					</ul>
-					<h1>Function insertBetweenPlacweHoldersSync</h1>
+					<h1>Function downloadOnFs</h1>
 				</div>
 				<section class="tsd-panel">
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace">
-						<li class="tsd-signature tsd-anchor-link" id="insertBetweenPlacweHoldersSync">
-							insert<wbr />Between<wbr />Placwe<wbr />Holders<wbr />Sync<span class="tsd-signature-symbol">(</span>filePath<span
-								class="tsd-signature-symbol"
-								>: </span
-							><span class="tsd-signature-type">string</span>, data<span class="tsd-signature-symbol">: </span
-							><span class="tsd-signature-type">string</span>, beginPlaceHolder<span class="tsd-signature-symbol">: </span
-							><span class="tsd-signature-type">string</span>, endPlaceHolder<span class="tsd-signature-symbol">: </span
-							><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span
-							><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span
-							><a href="#insertBetweenPlacweHoldersSync" aria-label="Permalink" class="tsd-anchor-icon"
+						<li class="tsd-signature tsd-anchor-link" id="downloadOnFs">
+							download<wbr />On<wbr />Fs<span class="tsd-signature-symbol">(</span>reqOpts<span class="tsd-signature-symbol">: </span
+							><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span
+							><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span
+							><a href="../interfaces/http.HttpRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface"
+								>HttpRequestOptions</a
+							>, file<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PathLike</span
+							><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span
+							><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span
+							><span class="tsd-signature-type">IncomingMessage</span><span class="tsd-signature-symbol">&gt;</span
+							><a href="#downloadOnFs" aria-label="Permalink" class="tsd-anchor-icon"
 								><svg
 									class="icon icon-tabler icon-tabler-link"
 									viewBox="0 0 24 24"
@@ -80,28 +81,39 @@
 							></a>
 						</li>
 						<li class="tsd-description">
+							<div class="tsd-comment tsd-typography">
+								<p>
+									Downloads from url and save on fs, optimal for big files because uses streams.<br />If the file directory does not exist,
+									it will be recursively created.<br />Once the download is complete, IncomingMessage is returned
+								</p>
+
+								<h3>Returns</h3>
+							</div>
 							<div class="tsd-parameters">
 								<h4 class="tsd-parameters-title">Parameters</h4>
 								<ul class="tsd-parameter-list">
 									<li>
-										<h5>filePath: <span class="tsd-signature-type">string</span></h5>
+										<h5>
+											reqOpts: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span
+											><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span
+											><a href="../interfaces/http.HttpRequestOptions.html" class="tsd-signature-type" data-tsd-kind="Interface"
+												>HttpRequestOptions</a
+											>
+										</h5>
 									</li>
 									<li>
-										<h5>data: <span class="tsd-signature-type">string</span></h5>
-									</li>
-									<li>
-										<h5>beginPlaceHolder: <span class="tsd-signature-type">string</span></h5>
-									</li>
-									<li>
-										<h5>endPlaceHolder: <span class="tsd-signature-type">string</span></h5>
+										<h5>file: <span class="tsd-signature-type">PathLike</span></h5>
 									</li>
 								</ul>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">
+								Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span
+								><span class="tsd-signature-type">IncomingMessage</span><span class="tsd-signature-symbol">&gt;</span>
+							</h4>
 							<aside class="tsd-sources">
 								<ul>
 									<li>
-										Defined in <a href="https://github.com/alexrr2iggs/iggs-node-utils/blob/972da23/src/files.ts#L61">src/files.ts:61</a>
+										Defined in <a href="https://github.com/alexrr2iggs/iggs-node-utils/blob/972da23/src/http.ts#L146">src/http.ts:146</a>
 									</li>
 								</ul>
 							</aside>
@@ -230,8 +242,8 @@
 								<li class="current">
 									<a href="../modules.html">@alexrr2iggs/iggs-<wbr />node-<wbr />utils -<wbr /> v1.0.4</a>
 									<ul>
-										<li class="current tsd-kind-namespace"><a href="../modules/files.html">files</a></li>
-										<li class="tsd-kind-namespace"><a href="../modules/http.html">http</a></li>
+										<li class="tsd-kind-namespace"><a href="../modules/files.html">files</a></li>
+										<li class="current tsd-kind-namespace"><a href="../modules/http.html">http</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -240,28 +252,64 @@
 				</nav>
 				<nav class="tsd-navigation secondary menu-sticky">
 					<ul>
-						<li class="tsd-kind-variable tsd-parent-kind-namespace">
-							<a href="../variables/files.DESKTOP_PATH.html" class="tsd-index-link"
+						<li class="tsd-kind-enum tsd-parent-kind-namespace">
+							<a href="../enums/http.Header.html" class="tsd-index-link"
 								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 									<rect
 										fill="var(--color-icon-background)"
-										stroke="var(--color-ts-variable)"
+										stroke="var(--color-ts-enum)"
 										stroke-width="1.5"
 										x="1"
 										y="1"
 										width="22"
 										height="22"
 										rx="6"
-										id="icon-32-path"></rect>
+										id="icon-8-path"></rect>
 									<path
-										d="M11.106 16L8.85 7.24H9.966L11.454 13.192C11.558 13.608 11.646 13.996 11.718 14.356C11.79 14.708 11.842 14.976 11.874 15.16C11.906 14.976 11.954 14.708 12.018 14.356C12.09 13.996 12.178 13.608 12.282 13.192L13.758 7.24H14.85L12.582 16H11.106Z"
+										d="M9.45 16V7.24H14.49V8.224H10.518V10.936H14.07V11.908H10.518V15.016H14.49V16H9.45Z"
 										fill="var(--color-text)"
-										id="icon-32-text"></path></svg
-								>DESKTOP_<wbr />PATH</a
+										id="icon-8-text"></path></svg
+								>Header</a
+							>
+						</li>
+						<li class="tsd-kind-enum tsd-parent-kind-namespace">
+							<a href="../enums/http.Method.html" class="tsd-index-link"
+								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
+									<use href="#icon-8-path"></use>
+									<use href="#icon-8-text"></use></svg
+								>Method</a
+							>
+						</li>
+						<li class="tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="../interfaces/http.HttpRequestOptions.html" class="tsd-index-link"
+								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
+									<rect
+										fill="var(--color-icon-background)"
+										stroke="var(--color-ts-interface)"
+										stroke-width="1.5"
+										x="1"
+										y="1"
+										width="22"
+										height="22"
+										rx="6"
+										id="icon-256-path"></rect>
+									<path
+										d="M9.51 16V15.016H11.298V8.224H9.51V7.24H14.19V8.224H12.402V15.016H14.19V16H9.51Z"
+										fill="var(--color-text)"
+										id="icon-256-text"></path></svg
+								>Http<wbr />Request<wbr />Options</a
+							>
+						</li>
+						<li class="tsd-kind-interface tsd-parent-kind-namespace">
+							<a href="../interfaces/http.httpResponse.html" class="tsd-index-link"
+								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
+									<use href="#icon-256-path"></use>
+									<use href="#icon-256-text"></use></svg
+								>http<wbr />Response</a
 							>
 						</li>
 						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.append.html" class="tsd-index-link"
+							<a href="http.cookiesToObj.html" class="tsd-index-link"
 								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 									<rect
 										fill="var(--color-icon-background)"
@@ -277,143 +325,63 @@
 										d="M9.39 16V7.24H14.55V8.224H10.446V11.128H14.238V12.112H10.47V16H9.39Z"
 										fill="var(--color-text)"
 										id="icon-64-text"></path></svg
-								>append</a
-							>
-						</li>
-						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.deserealizeObjectSync.html" class="tsd-index-link"
-								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
-									<use href="#icon-64-path"></use>
-									<use href="#icon-64-text"></use></svg
-								>deserealize<wbr />Object<wbr />Sync</a
-							>
-						</li>
-						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.exists.html" class="tsd-index-link"
-								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
-									<use href="#icon-64-path"></use>
-									<use href="#icon-64-text"></use></svg
-								>exists</a
-							>
-						</li>
-						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.fileLinesSync.html" class="tsd-index-link"
-								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
-									<use href="#icon-64-path"></use>
-									<use href="#icon-64-text"></use></svg
-								>file<wbr />Lines<wbr />Sync</a
+								>cookies<wbr />To<wbr />Obj</a
 							>
 						</li>
 						<li class="current tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.insertBetweenPlacweHoldersSync.html" class="tsd-index-link"
+							<a href="http.downloadOnFs.html" class="tsd-index-link"
 								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 									<use href="#icon-64-path"></use>
 									<use href="#icon-64-text"></use></svg
-								>insert<wbr />Between<wbr />Placwe<wbr />Holders<wbr />Sync</a
+								>download<wbr />On<wbr />Fs</a
 							>
 						</li>
 						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.readGZipSync.html" class="tsd-index-link"
+							<a href="http.getRequestFn.html" class="tsd-index-link"
 								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 									<use href="#icon-64-path"></use>
 									<use href="#icon-64-text"></use></svg
-								>readGZip<wbr />Sync</a
+								>get<wbr />Request<wbr />Fn</a
 							>
 						</li>
 						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.readJson.html" class="tsd-index-link"
+							<a href="http.httpJsonRequest.html" class="tsd-index-link"
 								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 									<use href="#icon-64-path"></use>
 									<use href="#icon-64-text"></use></svg
-								>read<wbr />Json</a
+								>http<wbr />Json<wbr />Request</a
 							>
 						</li>
 						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.readJsonSync.html" class="tsd-index-link"
+							<a href="http.httpRawRequest.html" class="tsd-index-link"
 								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 									<use href="#icon-64-path"></use>
 									<use href="#icon-64-text"></use></svg
-								>read<wbr />Json<wbr />Sync</a
+								>http<wbr />Raw<wbr />Request</a
 							>
 						</li>
 						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.remove.html" class="tsd-index-link"
+							<a href="http.httpRequest.html" class="tsd-index-link"
 								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 									<use href="#icon-64-path"></use>
 									<use href="#icon-64-text"></use></svg
-								>remove</a
+								>http<wbr />Request</a
 							>
 						</li>
 						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.removeSync.html" class="tsd-index-link"
+							<a href="http.httpSimpleReq.html" class="tsd-index-link"
 								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 									<use href="#icon-64-path"></use>
 									<use href="#icon-64-text"></use></svg
-								>remove<wbr />Sync</a
+								>http<wbr />Simple<wbr />Req</a
 							>
 						</li>
 						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.serealizeObjectSync.html" class="tsd-index-link"
+							<a href="http.objToCookies.html" class="tsd-index-link"
 								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 									<use href="#icon-64-path"></use>
 									<use href="#icon-64-text"></use></svg
-								>serealize<wbr />Object<wbr />Sync</a
-							>
-						</li>
-						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.write.html" class="tsd-index-link"
-								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
-									<use href="#icon-64-path"></use>
-									<use href="#icon-64-text"></use></svg
-								>write</a
-							>
-						</li>
-						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.writeGZipSync.html" class="tsd-index-link"
-								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
-									<use href="#icon-64-path"></use>
-									<use href="#icon-64-text"></use></svg
-								>writeGZip<wbr />Sync</a
-							>
-						</li>
-						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.writeJson.html" class="tsd-index-link"
-								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
-									<use href="#icon-64-path"></use>
-									<use href="#icon-64-text"></use></svg
-								>write<wbr />Json</a
-							>
-						</li>
-						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.writeJsonSync.html" class="tsd-index-link"
-								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
-									<use href="#icon-64-path"></use>
-									<use href="#icon-64-text"></use></svg
-								>write<wbr />Json<wbr />Sync</a
-							>
-						</li>
-						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.writeObjectToDesktopSync.html" class="tsd-index-link"
-								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
-									<use href="#icon-64-path"></use>
-									<use href="#icon-64-text"></use></svg
-								>write<wbr />Object<wbr />To<wbr />Desktop<wbr />Sync</a
-							>
-						</li>
-						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.writeSync.html" class="tsd-index-link"
-								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
-									<use href="#icon-64-path"></use>
-									<use href="#icon-64-text"></use></svg
-								>write<wbr />Sync</a
-							>
-						</li>
-						<li class="tsd-kind-function tsd-parent-kind-namespace">
-							<a href="files.writeToDesktopSync.html" class="tsd-index-link"
-								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
-									<use href="#icon-64-path"></use>
-									<use href="#icon-64-text"></use></svg
-								>write<wbr />To<wbr />Desktop<wbr />Sync</a
+								>obj<wbr />To<wbr />Cookies</a
 							>
 						</li>
 					</ul>

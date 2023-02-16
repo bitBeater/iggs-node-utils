@@ -1,5 +1,5 @@
-import { createWriteStream, existsSync, PathLike } from 'fs';
-import { mkdir, stat, writeFile } from 'fs/promises';
+import { createWriteStream, PathLike } from 'fs';
+import { mkdir, stat } from 'fs/promises';
 import { ClientRequest, get, IncomingMessage, request, RequestOptions } from 'http';
 import { get as httpsGet, request as httpsRequest } from 'https';
 import { reviver } from 'iggs-utils';
@@ -26,8 +26,8 @@ export function httpSimpleReq(
 	const reqFn = getRequestFn(reqOpts);
 	const req = reqFn(reqOpts, callback);
 
-	req.flushHeaders();
-	req.end();
+	// req.flushHeaders();
+	// req.end();
 
 	return req;
 }
@@ -38,7 +38,7 @@ export function httpRequest(reqOpts: HttpRequestOptions | string | URL, payload?
 			let data = '';
 			// a data chunk has been received.
 			response.on('data', chunk => {
-				data += chunk;
+				data += chunk.toString();
 			});
 
 			// complete response has been received.
@@ -143,7 +143,7 @@ export function getRequestFn(
  * @param file
  * @returns
  */
-export function downloadOnFs(reqOpts: HttpRequestOptions | string | URL, file: PathLike): Promise<IncomingMessage> {
+export function downloadOnFs(reqOpts: HttpRequestOptions | string | URL, file: PathLike, body?: any): Promise<IncomingMessage> {
 	const dirPath = dirname(file.toString());
 
 	return new Promise((resolve, reject) => {
@@ -163,6 +163,11 @@ export function downloadOnFs(reqOpts: HttpRequestOptions | string | URL, file: P
 				});
 
 				req.on('error', e => reject(e));
+
+				if (body) req.write(body);
+
+				req.flushHeaders();
+				req.end();
 			});
 	});
 }
