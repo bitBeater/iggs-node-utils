@@ -12,14 +12,14 @@ export interface HttpRequestOptions extends RequestOptions {
 	searchParams?: { [key: string]: string };
 }
 
-export interface httpResponse<T> {
+export interface HttpResponse<T> {
 	response: IncomingMessage;
 	data: T;
 }
 
 export function httpSimpleReq(
 	reqOpts: HttpRequestOptions | string | URL,
-	callback?: (res: IncomingMessage, payload?: any) => void
+	callback?: (res: IncomingMessage, payload?: unknown) => void
 ): ClientRequest {
 	reqOpts = adaptRequestOpts(reqOpts);
 
@@ -32,8 +32,8 @@ export function httpSimpleReq(
 	return req;
 }
 
-export function httpRequest(reqOpts: HttpRequestOptions | string | URL, payload?: any): Promise<httpResponse<string>> {
-	const retVAl = new Promise<httpResponse<string>>((resolve, reject) => {
+export function httpRequest(reqOpts: HttpRequestOptions | string | URL, payload?: unknown): Promise<HttpResponse<string>> {
+	return new Promise<HttpResponse<string>>((resolve, reject) => {
 		const req = httpSimpleReq(reqOpts, response => {
 			let data = '';
 			// a data chunk has been received.
@@ -54,12 +54,10 @@ export function httpRequest(reqOpts: HttpRequestOptions | string | URL, payload?
 		req.flushHeaders();
 		req.end();
 	});
-
-	return retVAl;
 }
 
-export function httpRawRequest(reqOpts: HttpRequestOptions | string | URL, payload?: any): Promise<httpResponse<string>> {
-	const retVAl = new Promise<httpResponse<string>>((resolve, reject) => {
+export function httpRawRequest(reqOpts: HttpRequestOptions | string | URL, payload?: any): Promise<HttpResponse<string>> {
+	return new Promise<HttpResponse<string>>((resolve, reject) => {
 		reqOpts = adaptRequestOpts(reqOpts);
 		const reqFn = getRequestFn(reqOpts);
 
@@ -83,15 +81,13 @@ export function httpRawRequest(reqOpts: HttpRequestOptions | string | URL, paylo
 		req.flushHeaders();
 		req.end();
 	});
-
-	return retVAl;
 }
 
 export function httpJsonRequest<T>(
 	req: HttpRequestOptions | string | URL,
 	data?: object | string,
 	revivers: reviver.Reviver<any>[] = []
-): Promise<httpResponse<T>> {
+): Promise<HttpResponse<T>> {
 	const payload = JSON.stringify(data);
 	const reqOptions = toRequestOpts(req);
 	const headers = { ...(reqOptions.headers || {}) };

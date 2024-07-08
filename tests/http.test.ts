@@ -1,7 +1,7 @@
 import { readFileSync, rmSync } from 'fs';
 import { createServer } from 'http';
 import { join } from 'path';
-import { exists } from '../src/files';
+import { exists } from '../src/fs/files';
 import { downloadOnFs, httpRequest } from '../src/http';
 
 it('test httpRequest', async () => {

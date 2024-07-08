@@ -1,5 +1,6 @@
 import { Abortable } from 'events';
 import {
+	copyFileSync,
 	existsSync,
 	mkdirSync,
 	Mode,
@@ -7,30 +8,19 @@ import {
 	OpenMode,
 	PathLike,
 	readFileSync,
+	rmSync,
 	unlinkSync,
 	WriteFileOptions,
-	writeFileSync,
+	writeFileSync
 } from 'fs';
 import { appendFile, FileHandle, FlagAndOpenMode, mkdir, readFile, stat, unlink, writeFile } from 'fs/promises';
-import { homedir } from 'os';
-import { dirname, join } from 'path';
+import { dirname, resolve } from 'path';
 import { Stream } from 'stream';
 
 import { promises, reviver } from 'iggs-utils';
 import { gzipSync, unzipSync, ZlibOptions } from 'zlib';
 
-export const DESKTOP_PATH = join(homedir(), 'Desktop');
-
-export function writeObjectToDesktopSync(fileName: string, object: any) {
-	writeFileSync(`${DESKTOP_PATH}/${fileName}`, JSON.stringify(object));
-}
-
-export function writeToDesktopSync(fileName: string, data: string | Buffer) {
-	writeFileSync(`${DESKTOP_PATH}/${fileName}`, data);
-}
-/**
- * Returns `undefined`.
- *
+/** *
  * If `data` is a plain object, it must have an own (not inherited) `toString`function property.
  *
  * The `mode` option only affects the newly created file. See {@link open} for more details.
@@ -45,10 +35,23 @@ export function writeSync(file: PathLike, data?: string | NodeJS.ArrayBufferView
 	writeFileSync(file, data || '');
 }
 
+/**
+ * Writes the given object as JSON to the specified file path synchronously.
+ * @param path - The file path where the JSON should be written.
+ * @param object - The object to be written as JSON.
+ */
 export function writeJsonSync(path: string, object: any) {
 	writeFileSync(path, JSON.stringify(object));
 }
 
+/**
+ * Reads and parses a JSON file synchronously.
+ *
+ * @template T - The type of the parsed JSON object.
+ * @param {string} path - The path to the JSON file.
+ * @param {reviver.Reviver<any>} [reviver] - Optional reviver function for JSON.parse.
+ * @returns {T} - The parsed JSON object.
+ */
 export function readJsonSync<T>(path: string, reviver?: reviver.Reviver<any>): T {
 	const data = readFileSync(path);
 	if (!data) return;
@@ -58,6 +61,15 @@ export function readJsonSync<T>(path: string, reviver?: reviver.Reviver<any>): T
 	return retVal;
 }
 
+/**
+ * Inserts the specified data between the given placeholders in the file synchronously.
+ * If the file does not exist, it creates the file and inserts the data.
+ *
+ * @param filePath - The path of the file.
+ * @param data - The data to be inserted between the placeholders.
+ * @param beginPlaceHolder - The beginning placeholder.
+ * @param endPlaceHolder - The ending placeholder.
+ */
 export function insertBetweenPlacweHoldersSync(filePath: string, data: string, beginPlaceHolder: string, endPlaceHolder: string) {
 	const writeData = readFileSync(filePath);
 	if (!existsSync(filePath)) {
@@ -72,9 +84,14 @@ export function insertBetweenPlacweHoldersSync(filePath: string, data: string, b
 	writeFileSync(filePath, `${top}\n\r${beginPlaceHolder}\n\r${data}\n\r${endPlaceHolder}\n\r${bottom}`);
 }
 
+/**
+ * Reads a file and returns an array of string lines.
+ *
+ * @param path - The path to the file.
+ * @param lineSeparator - The regular expression used to split the file into lines. Defaults to /[\n|\r]/.
+ * @returns An array of lines from the file, or null if the file cannot be read.
+ */
 export function fileLinesSync(path: string, lineSeparator = /[\n|\r]/): string[] {
-	if (!path) return null;
-
 	try {
 		const data = readFileSync(path)?.toString();
 		if (!data) return null;
@@ -84,6 +101,14 @@ export function fileLinesSync(path: string, lineSeparator = /[\n|\r]/): string[]
 	}
 }
 
+/**
+ * Writes the given data to a file in GZip format synchronously.
+ *
+ * @param filePath - The path to the file.
+ * @param data - The data to be written to the file. It can be a string or a Buffer.
+ * @param writeFileOptions - The options for writing the file (optional).
+ * @param zLibOptions - The options for compressing the data using zlib (optional).
+ */
 export function writeGZipSync(
 	filePath: string,
 	data: string | Buffer,
@@ -95,6 +120,14 @@ export function writeGZipSync(
 	writeFileSync(filePath, zippBuffer, writeFileOptions);
 }
 
+/**
+ * Reads a gzipped file synchronously and returns the uncompressed data as a Buffer.
+ *
+ * @param path - The path to the gzipped file.
+ * @param readFileOptions - The options to pass to the `readFileSync` function.
+ * @param zlibOptions - The options to pass to the `unzipSync` function.
+ * @returns The uncompressed data as a Buffer.
+ */
 export function readGZipSync(
 	path: string,
 	readFileOptions?: { encoding?: null; flag?: string },
@@ -104,10 +137,21 @@ export function readGZipSync(
 	return unzipSync(data, zlibOptions);
 }
 
+/**
+ * Serializes an object to JSON and writes it to a file synchronously.
+ * @param filePath - The path of the file to write.
+ * @param object - The object to serialize and write to the file.
+ */
 export function serealizeObjectSync(filePath: string, object: any) {
 	writeGZipSync(filePath, JSON.stringify(object));
 }
 
+/**
+ * Deserializes an object from a file synchronously.
+ * 
+ * @param filePath - The path to the file.
+ * @returns The deserialized object.
+ */
 export function deserealizeObjectSync(filePath: string) {
 	return JSON.parse(readGZipSync(filePath).toString());
 }
@@ -184,9 +228,9 @@ export function write(
 		| Stream,
 	options?:
 		| (ObjectEncodingOptions & {
-				mode?: Mode | undefined;
-				flag?: OpenMode | undefined;
-		  } & Abortable)
+			mode?: Mode | undefined;
+			flag?: OpenMode | undefined;
+		} & Abortable)
 		| BufferEncoding
 		| null
 ): Promise<void> {
@@ -214,9 +258,9 @@ export function readJson<T>(
 	file: PathLike | FileHandle,
 	options?:
 		| ({
-				encoding?: null | undefined;
-				flag?: OpenMode | undefined;
-		  } & Abortable)
+			encoding?: null | undefined;
+			flag?: OpenMode | undefined;
+		} & Abortable)
 		| null,
 	reviver?: reviver.Reviver<any>
 ): Promise<T> {
@@ -239,9 +283,9 @@ export function writeJson(
 	obj: any,
 	options?:
 		| (ObjectEncodingOptions & {
-				mode?: Mode | undefined;
-				flag?: OpenMode | undefined;
-		  } & Abortable)
+			mode?: Mode | undefined;
+			flag?: OpenMode | undefined;
+		} & Abortable)
 		| BufferEncoding
 		| null,
 	replacer?: reviver.Replacer<any>,
@@ -260,4 +304,52 @@ export function writeJson(
  */
 export function remove(path: PathLike): Promise<void> {
 	return unlink(path).catch(e => (e.code === 'ENOENT' ? undefined : e));
+}
+
+
+
+/**
+ * Writes data to a file and creates the necessary directory structure if it doesn't exist.
+ *
+ * @param path - The path to the file.
+ * @param data - The data to write to the file.
+ * @param options - The options for writing the file.
+ */
+export function writeFileAndDir(path: string, data?: Uint8Array | string, options?: WriteFileOptions) {
+	const parentDir = resolve(path, '..');
+
+	if (!existsSync(parentDir)) {
+		mkdirSync(parentDir, { recursive: true });
+	}
+
+	data = typeof data === 'string' ? new TextEncoder().encode(data) : data;
+	writeFileSync(path, data, options);
+}
+
+export function copyFileRecursive(origPath: string, destPath: string) {
+
+	const destParentDir = resolve(destPath, '..');
+
+	if (!existsSync(destParentDir)) {
+		mkdirSync(destParentDir, { recursive: true });
+	}
+
+	copyFileSync(origPath, destPath);
+}
+
+
+
+
+/**
+ * remove sync, without throwing NotFound error if it doesn't exist
+ * @param path
+ * @param options
+ */
+export function silentRemove(path: string | URL, options?: FileSystemRemoveOptions) {
+
+	try {
+		rmSync(path, options);
+	} catch (error: any) {
+		if ((error.code !== 'ENOENT')) throw error;
+	}
 }
