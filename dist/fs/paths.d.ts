@@ -1,4 +1,5 @@
 export declare const TILDE_NOTATION_REX: RegExp;
+export declare const PATH_REX: RegExp;
 /**
  * Checks if the given path is in tilde notation.
  *
@@ -13,4 +14,16 @@ export declare function isTildeNotation(path: string): boolean;
  * @returns The expanded path with the tilde (~) notation replaced by the user's home directory.
  */
 export declare function expandTilde(path: string): string;
+/**
+ * Resolves a path to an absolute path.
+ * like `path.resolve` but also expands tilde notation.
+ *
+ * @param path - The path to resolve.
+ * @returns The resolved absolute path.
+ */
+export declare function resolve(path: string): string;
+/**
+ * Checks if the given string is a path synthax.
+ */
+export declare function isPathSynthax(string: string): boolean;
 //# sourceMappingURL=paths.d.ts.map

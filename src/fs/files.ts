@@ -17,6 +17,7 @@ import { appendFile, FileHandle, FlagAndOpenMode, mkdir, readFile, stat, unlink,
 import { dirname, resolve } from 'path';
 import { Stream } from 'stream';
 
+import { createHash } from 'crypto';
 import { promises, reviver } from 'iggs-utils';
 import { gzipSync, unzipSync, ZlibOptions } from 'zlib';
 
@@ -352,4 +353,19 @@ export function silentRemove(path: string | URL, options?: FileSystemRemoveOptio
 	} catch (error: any) {
 		if ((error.code !== 'ENOENT')) throw error;
 	}
+}
+
+/**
+ * Calculates the SHA256 hash of a file.
+ * 
+ * @param filePath - The path to the file.
+ * @returns The SHA256 hash of the file as a hexadecimal string.
+ */
+export function sha265(filePath: string): string {
+
+	const hash = createHash('sha256');
+	const input = readFileSync(filePath);
+	hash.update(input);
+
+	return hash.digest('hex');
 }
