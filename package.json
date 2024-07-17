@@ -1,6 +1,6 @@
 {
 	"name": "@bitBeater/iggs-node-utils",
-	"version": "1.0.6",
+	"version": "1.0.11",
 	"description": "",
 	"main": "dist/index.js",
 	"scripts": {
@@ -10,8 +10,10 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/bitBeater/iggs-node-utils.git",
-		"test": "npx jest --config=jest.config.js"
+		"url": "git://github.com/bitBeater/iggs-node-utils.git"
+	},
+	"publishConfig": {
+		"access": "public"
 	},
 	"author": "",
 	"license": "ISC",

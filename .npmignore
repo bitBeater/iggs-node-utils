@@ -1,0 +1,9 @@
+docs
+tests
+.npmrc
+.prettierrc.json 
+.vscode
+jest.config.js
+typedoc.json
+.history
+README.md
