@@ -1,6 +1,6 @@
 {
-	"name": "@bitBeater/iggs-node-utils",
-	"version": "1.0.11",
+	"name": "iggs-node-utils",
+	"version": "1.0.12",
 	"description": "",
 	"main": "dist/index.js",
 	"scripts": {
