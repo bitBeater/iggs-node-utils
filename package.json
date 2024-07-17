@@ -1,12 +1,12 @@
 {
 	"name": "iggs-node-utils",
-	"version": "1.0.12",
+	"version": "1.0.14",
 	"description": "",
 	"main": "dist/index.js",
 	"scripts": {
 		"genDocs": "npx typedoc --options typedoc.json",
 		"test": "npx jest --config=jest.config.js",
-		"build": ""
+		"build": "tsc"
 	},
 	"repository": {
 		"type": "git",
